@@ -1,40 +1,49 @@
 <template>
   <h1>Composition API</h1>
-  <ul>
-    <li>{{ name }}</li>
-    <li>{{ age }}</li>
-    <li>{{ userInfo }}</li>
-    <li>{{ count }}</li>
-    <button @click="increaseCount">Count</button>
-  </ul>
+  <p>{{ count }}</p>
+  <span>{{ message }}</span>
+  <button @click="handleClick">Count</button>
 </template>
 
 <script>
-import { computed, reactive, toRefs } from "vue";
+import { reactive, toRefs, watch } from "vue";
 export default {
   name: "App",
   setup() {
-    let user = reactive({
-      name: "Aung Myat Oo",
-      age: 30,
-    });
-
-    // const userInfo = computed({
-    //   get: () => `${user.name} is ${user.age} years old`,
-    //   set: (val) => (user.name = val),
-    // });
-
-    const userInfo = computed(() => `${user.name} is ${user.age} years old`);
-
+    // const count = ref(0);
+    // const message = ref("");
     const state = reactive({
       count: 0,
+      message: "",
     });
 
-    const increaseCount = () => {
+    const handleClick = () => {
       state.count++;
     };
+    // watch(count, (val) => {
+    //   if (val < 5) {
+    //     message.value = "Less";
+    //   } else if (val < 10) {
+    //     message.value = "Medium";
+    //   } else {
+    //     message.value = "Large";
+    //   }
+    // }, { deep: true });
+    watch(
+      () => state.count,
+      (val) => {
+        if (val < 5) {
+          state.message = "Less";
+        } else if (val < 10) {
+          state.message = "Medium";
+        } else {
+          state.message = "Large";
+        }
+      },
+      { deep: true }
+    );
 
-    return { ...toRefs(user), ...toRefs(state), increaseCount, userInfo };
+    return { ...toRefs(state), handleClick };
   },
 };
 </script>

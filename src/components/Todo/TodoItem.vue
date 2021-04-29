@@ -1,6 +1,7 @@
 <template>
   <li>
-    {{ taskToUpperCase }} <button @click="handleDelete(todo.id)">Delete</button>
+    {{ taskToUpperCase }}
+    <button @click="handleDelete(todo.id)">Delete</button>
   </li>
 </template>
 

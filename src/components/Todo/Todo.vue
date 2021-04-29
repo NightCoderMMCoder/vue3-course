@@ -1,7 +1,9 @@
 <template>
   <div>
-    <input type="text" v-model="task" />
-    <button @click="handleClick">Add</button>
+    <form @submit.prevent="handleClick">
+      <input type="text" v-model="task" />
+      <button type="submit">Add</button>
+    </form>
     <TodosList />
   </div>
 </template>

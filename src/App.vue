@@ -1,50 +1,14 @@
 <template>
   <h1>Composition API</h1>
-  <p>{{ count }}</p>
-  <span>{{ message }}</span>
-  <button @click="handleClick">Count</button>
+  <Calculator />
 </template>
 
 <script>
-import { reactive, toRefs, watch } from "vue";
+import Calculator from "./components/Calculator.vue";
 export default {
+  components: { Calculator },
   name: "App",
-  setup() {
-    // const count = ref(0);
-    // const message = ref("");
-    const state = reactive({
-      count: 0,
-      message: "",
-    });
-
-    const handleClick = () => {
-      state.count++;
-    };
-    // watch(count, (val) => {
-    //   if (val < 5) {
-    //     message.value = "Less";
-    //   } else if (val < 10) {
-    //     message.value = "Medium";
-    //   } else {
-    //     message.value = "Large";
-    //   }
-    // }, { deep: true });
-    watch(
-      () => state.count,
-      (val) => {
-        if (val < 5) {
-          state.message = "Less";
-        } else if (val < 10) {
-          state.message = "Medium";
-        } else {
-          state.message = "Large";
-        }
-      },
-      { deep: true }
-    );
-
-    return { ...toRefs(state), handleClick };
-  },
+  setup() {},
 };
 </script>
 

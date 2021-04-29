@@ -1,34 +1,50 @@
 <template>
   <h1>Composition API</h1>
   <ul>
-    <li>{{ user.name }}</li>
-    <li>{{ user.age }}</li>
+    <li>{{ name }}</li>
+    <li>{{ age }}</li>
   </ul>
 </template>
 
 <script>
-import { reactive } from "vue";
+import { reactive, toRefs } from "vue";
 export default {
   name: "App",
   setup() {
-    // let name = ref("Aung Myat Oo");
-    // let age = ref(30);
     let user = reactive({
       name: "Aung Myat Oo",
       age: 30,
     });
 
     setTimeout(() => {
-      // name.value = "Myo Thant Kyaw";
-      // age.value = 40;
-      // user.value.name = 'Myo Thant Kyaw';
-      console.log(user);
       user.name = "Myo Thant Kyaw";
     }, 1000);
 
-    return { user };
+    return { ...toRefs(user) };
   },
 };
+
+// let virus = "Corona";
+// let public_voice = `${virus} go away`;
+// virus = "Min Aung Hlaing";
+// console.log(public_voice);
+let data = { virus: "Corona", public_voice: "Corona Go Away" };
+const handler = {
+  set(target, key, value) {
+    console.log(target);
+    console.log(key);
+    console.log(value);
+    if (key === "virus") {
+      target.public_voice = `${value} Go Away`;
+    }
+    target.virus = value;
+    return true;
+  },
+};
+
+const proxy = new Proxy(data, handler);
+proxy.virus = "Min Aung Hlaing";
+console.log(proxy);
 </script>
 
 <style>

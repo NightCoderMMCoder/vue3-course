@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { computed, reactive, toRefs, watch } from "vue";
+import { computed, reactive, toRefs, watch, watchEffect } from "vue";
 export default {
   setup() {
     const state = reactive({
@@ -21,21 +21,33 @@ export default {
       result: 0,
       symbol: "+",
     });
-
-    watch(
-      () => [state.firstNum, state.secondNum, state.symbol],
-      (val) => {
-        if (val[2] === "+") {
-          state.result = val[0] + val[1];
-        } else if (val[2] === "-") {
-          state.result = val[0] - val[1];
-        } else if (val[2] === "*") {
-          state.result = val[0] * val[1];
-        } else if (val[2] === "/") {
-          state.result = val[0] / val[1];
-        }
+    watchEffect(() => {
+      console.log("run");
+      if (state.symbol === "+") {
+        state.result = state.firstNum + state.secondNum;
+      } else if (state.symbol === "-") {
+        state.result = state.firstNum - state.secondNum;
+      } else if (state.symbol === "*") {
+        state.result = state.firstNum * state.secondNum;
+      } else if (state.symbol === "/") {
+        state.result = state.firstNum / state.secondNum;
       }
-    );
+    });
+
+    // watch(
+    //   () => [state.firstNum, state.secondNum, state.symbol],
+    //   (val) => {
+    //     if (val[2] === "+") {
+    //       state.result = val[0] + val[1];
+    //     } else if (val[2] === "-") {
+    //       state.result = val[0] - val[1];
+    //     } else if (val[2] === "*") {
+    //       state.result = val[0] * val[1];
+    //     } else if (val[2] === "/") {
+    //       state.result = val[0] / val[1];
+    //     }
+    //   }
+    // );
 
     return { ...toRefs(state) };
   },

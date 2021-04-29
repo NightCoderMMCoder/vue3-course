@@ -1,22 +1,32 @@
 <template>
   <h1>Composition API</h1>
   <ul>
-    <li>{{ name }}</li>
+    <li>{{ user.name }}</li>
+    <li>{{ user.age }}</li>
   </ul>
 </template>
 
 <script>
-import { ref } from "vue";
+import { reactive } from "vue";
 export default {
   name: "App",
   setup() {
-    let name = ref("Aung Myat Oo");
+    // let name = ref("Aung Myat Oo");
+    // let age = ref(30);
+    let user = reactive({
+      name: "Aung Myat Oo",
+      age: 30,
+    });
 
     setTimeout(() => {
-      name.value = "Myo Thant Kyaw";
+      // name.value = "Myo Thant Kyaw";
+      // age.value = 40;
+      // user.value.name = 'Myo Thant Kyaw';
+      console.log(user);
+      user.name = "Myo Thant Kyaw";
     }, 1000);
 
-    return { name };
+    return { user };
   },
 };
 </script>

@@ -2,12 +2,15 @@
   <div>
     <input type="text" v-model="task" />
     <button @click="handleClick">Add</button>
+    <TodosList :todos="todos" />
   </div>
 </template>
 
 <script>
 import { ref } from "vue";
+import TodosList from "./TodosList.vue";
 export default {
+  components: { TodosList },
   name: "Todo",
   setup() {
     const task = ref("");
@@ -19,6 +22,7 @@ export default {
         task: task.value,
       });
       id++;
+      task.value = "";
     };
     return { task, handleClick, todos };
   },

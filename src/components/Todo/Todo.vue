@@ -2,7 +2,7 @@
   <div>
     <input type="text" v-model="task" />
     <button @click="handleClick">Add</button>
-    <TodosList :todos="todos" />
+    <TodosList :todos="todos" @remove-todo="handleDelete" />
   </div>
 </template>
 
@@ -24,7 +24,11 @@ export default {
       id++;
       task.value = "";
     };
-    return { task, handleClick, todos };
+    const handleDelete = (id) => {
+      let index = todos.value.findIndex((todo) => todo.id === id);
+      todos.value.splice(index, 1);
+    };
+    return { task, handleClick, todos, handleDelete };
   },
 };
 </script>

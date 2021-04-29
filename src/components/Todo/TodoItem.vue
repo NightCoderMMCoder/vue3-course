@@ -1,16 +1,26 @@
 <template>
-  <li>{{ taskToUpperCase }}</li>
+  <li>
+    {{ taskToUpperCase }} <button @click="handleDelete(todo.id)">Delete</button>
+  </li>
 </template>
 
 <script>
 import { computed } from "vue";
 export default {
   props: { todo: Object },
-  setup({ todo }) {
+  emits: ["deleteTodo"],
+  setup({ todo }, { emit }) {
     const taskToUpperCase = computed(() => todo.task.toUpperCase());
-    return { taskToUpperCase };
+    const handleDelete = (id) => {
+      emit("deleteTodo", id);
+    };
+    return { taskToUpperCase, handleDelete };
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+li {
+  padding: 10px;
+}
+</style>

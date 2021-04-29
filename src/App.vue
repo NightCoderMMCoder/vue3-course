@@ -11,6 +11,31 @@ export default {
   components: { Calculator, Todo },
   name: "App",
   setup() {},
+  data() {
+    return {
+      expense: [
+        {
+          id: 1,
+          text: "Game",
+        },
+        {
+          id: 2,
+          text: "Shopping",
+        },
+      ],
+    };
+  },
+  provide() {
+    return {
+      expense: this.expense,
+      handleClick: this.handleClick,
+    };
+  },
+  methods: {
+    handleClick(id) {
+      this.expense.splice(id, 1);
+    },
+  },
 };
 </script>
 

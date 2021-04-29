@@ -2,7 +2,7 @@
   <div>
     <input type="text" v-model="task" />
     <button @click="handleClick">Add</button>
-    <TodosList :todos="todos" />
+    <TodosList />
   </div>
 </template>
 
@@ -15,6 +15,7 @@ export default {
   setup() {
     const task = ref("");
     const todos = ref([]);
+    provide("todos", todos);
     let id = 1;
 
     const handleClick = () => {

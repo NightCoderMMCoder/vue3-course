@@ -2,12 +2,12 @@
   <div>
     <input type="text" v-model="task" />
     <button @click="handleClick">Add</button>
-    <TodosList :todos="todos" @remove-todo="handleDelete" />
+    <TodosList :todos="todos" />
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import { provide, ref } from "vue";
 import TodosList from "./TodosList.vue";
 export default {
   components: { TodosList },
@@ -16,6 +16,7 @@ export default {
     const task = ref("");
     const todos = ref([]);
     let id = 1;
+
     const handleClick = () => {
       todos.value.unshift({
         id,
@@ -24,10 +25,14 @@ export default {
       id++;
       task.value = "";
     };
+
     const handleDelete = (id) => {
       let index = todos.value.findIndex((todo) => todo.id === id);
       todos.value.splice(index, 1);
     };
+
+    provide("removeTodo", handleDelete);
+
     return { task, handleClick, todos, handleDelete };
   },
 };

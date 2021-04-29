@@ -5,15 +5,16 @@
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed, inject } from "vue";
 export default {
   props: { todo: Object },
-  emits: ["deleteTodo"],
-  setup({ todo }, { emit }) {
+  setup({ todo }) {
+    const deleteTodo = inject("removeTodo");
     const taskToUpperCase = computed(() => todo.task.toUpperCase());
     const handleDelete = (id) => {
-      emit("deleteTodo", id);
+      deleteTodo(id);
     };
+
     return { taskToUpperCase, handleDelete };
   },
 };

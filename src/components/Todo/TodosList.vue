@@ -5,7 +5,6 @@
       :key="todo.id"
       :todo="todo"
       class="list"
-      @delete-todo="$emit('removeTodo', $event)"
     ></TodoItem>
   </ul>
 </template>
@@ -15,7 +14,6 @@ import TodoItem from "./TodoItem.vue";
 export default {
   components: { TodoItem },
   props: { todos: Array },
-  emits: ["removeTodo"],
 };
 </script>
 

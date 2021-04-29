@@ -3,13 +3,14 @@
   <ul>
     <li>{{ name }}</li>
     <li>{{ age }}</li>
+    <li>{{ userInfo }}</li>
     <li>{{ count }}</li>
     <button @click="increaseCount">Count</button>
   </ul>
 </template>
 
 <script>
-import { reactive, toRefs } from "vue";
+import { computed, reactive, toRefs } from "vue";
 export default {
   name: "App",
   setup() {
@@ -17,6 +18,14 @@ export default {
       name: "Aung Myat Oo",
       age: 30,
     });
+
+    // const userInfo = computed({
+    //   get: () => `${user.name} is ${user.age} years old`,
+    //   set: (val) => (user.name = val),
+    // });
+
+    const userInfo = computed(() => `${user.name} is ${user.age} years old`);
+
     const state = reactive({
       count: 0,
     });
@@ -25,11 +34,7 @@ export default {
       state.count++;
     };
 
-    setTimeout(() => {
-      user.name = "Myo Thant Kyaw";
-    }, 1000);
-
-    return { ...toRefs(user), ...toRefs(state), increaseCount };
+    return { ...toRefs(user), ...toRefs(state), increaseCount, userInfo };
   },
 };
 </script>

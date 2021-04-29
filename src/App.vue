@@ -1,9 +1,23 @@
-<template> </template>
+<template>
+  <h1>Composition API</h1>
+  <ul>
+    <li>{{ name }}</li>
+  </ul>
+</template>
 
 <script>
+import { ref } from "vue";
 export default {
   name: "App",
-  setup() {},
+  setup() {
+    let name = ref("Aung Myat Oo");
+
+    setTimeout(() => {
+      name.value = "Myo Thant Kyaw";
+    }, 1000);
+
+    return { name };
+  },
 };
 </script>
 

@@ -1,6 +1,5 @@
 <template>
   <the-hader></the-hader>
-
   <div class="container">
     <calculate-transaction></calculate-transaction>
 

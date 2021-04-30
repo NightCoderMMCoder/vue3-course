@@ -1,4 +1,5 @@
 <template>
+  <base-dialog v-if="open" @confirm-delete="confirmDelete"></base-dialog>
   <li :class="listClasses">
     {{ transaction.text }}
     <span>{{ minusOrPlus }}${{ Math.abs(transaction.amount) }}</span
@@ -7,24 +8,37 @@
 </template>
 
 <script>
-import { computed, inject } from "vue";
+import { computed, inject, ref } from "vue";
+import BaseDialog from "./UI/BaseDialog";
+
 export default {
+  components: { BaseDialog },
   props: { transaction: Object },
   setup(props) {
     const deleteTransaction = inject("deleteTransaction");
+
+    const open = ref(false);
+
     const listClasses = computed(() => {
       if (props.transaction.amount > 0) return "plus";
       return "minus";
     });
+
     const minusOrPlus = computed(() => {
       if (props.transaction.amount > 0) return "+";
       return "-";
     });
 
     const handleClick = () => {
-      deleteTransaction(props.transaction.id);
+      open.value = true;
     };
-    return { listClasses, minusOrPlus, handleClick };
+    const confirmDelete = (confirm) => {
+      if (confirm) {
+        deleteTransaction(props.transaction.id);
+      }
+      open.value = false;
+    };
+    return { listClasses, minusOrPlus, handleClick, open, confirmDelete };
   },
 };
 </script>

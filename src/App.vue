@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { provide, ref } from "vue";
 import AddTransaciton from "./components/AddTransaciton.vue";
 import CalculateTransaction from "./components/CalculateTransaction.vue";
 import TheHader from "./components/Layout/TheHader.vue";
@@ -37,7 +37,15 @@ export default {
         amount: 100000,
       },
     ]);
-    return { transactions };
+
+    const deleteTransaction = (id) => {
+      const index = transactions.value.findIndex(
+        (transaction) => transaction.id === id
+      );
+      transactions.value.splice(index, 1);
+    };
+    provide("deleteTransaction", deleteTransaction);
+    return { transactions, deleteTransaction };
   },
 };
 </script>

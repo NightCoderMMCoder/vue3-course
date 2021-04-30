@@ -2,15 +2,16 @@
   <li :class="listClasses">
     {{ transaction.text }}
     <span>{{ minusOrPlus }}${{ Math.abs(transaction.amount) }}</span
-    ><button class="delete-btn">x</button>
+    ><button class="delete-btn" @click="handleClick">x</button>
   </li>
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed, inject } from "vue";
 export default {
   props: { transaction: Object },
   setup(props) {
+    const deleteTransaction = inject("deleteTransaction");
     const listClasses = computed(() => {
       if (props.transaction.amount > 0) return "plus";
       return "minus";
@@ -19,7 +20,11 @@ export default {
       if (props.transaction.amount > 0) return "+";
       return "-";
     });
-    return { listClasses, minusOrPlus };
+
+    const handleClick = () => {
+      deleteTransaction(props.transaction.id);
+    };
+    return { listClasses, minusOrPlus, handleClick };
   },
 };
 </script>

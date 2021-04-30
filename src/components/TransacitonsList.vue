@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import TransactionItem from "./Transaction";
+import TransactionItem from "./TransactionItem";
 export default {
   props: { transactions: Array },
   components: { TransactionItem },

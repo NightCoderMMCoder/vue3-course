@@ -6,11 +6,12 @@
       <input
         type="text"
         id="text"
-        class="errorBox"
+        :class="{ errorBox: errors.text }"
         placeholder="Enter text..."
         v-model.trim="transaction.text"
+        @blur="clearValidation('text')"
       />
-      <small class="error">Please fill the text</small>
+      <small class="error" v-if="errors.text">{{ errors.text }}</small>
     </div>
     <div class="form-control">
       <label for="amount"
@@ -20,11 +21,12 @@
       <input
         type="number"
         id="amount"
-        class="errorBox"
+        :class="{ errorBox: errors.amount }"
         placeholder="Enter amount..."
         v-model.number="transaction.amount"
+        @blur="clearValidation('amount')"
       />
-      <small class="error">Please fill the amount</small>
+      <small class="error" v-if="errors.amount">{{ errors.amount }}</small>
     </div>
     <button class="btn" type="submit">Add transaction</button>
   </form>
@@ -43,15 +45,40 @@ export default {
       errors: {},
     });
 
-    const addTransaction = () => {
-      createTransaction({
-        ...state.transaction,
-        id: Math.floor(Math.random() * 100000000),
-      });
-      state.transaction.text = "";
-      state.transaction.amount = "";
+    const clearValidation = (input) => {
+      if (!state.transaction[input]) return;
+      state.errors[input] = "";
+      console.log(state.transaction[input]);
     };
-    return { ...toRefs(state), addTransaction };
+
+    const notValidate = () => {
+      let isError = false;
+      if (!state.transaction.text) {
+        state.errors.text = "Please fill the text";
+        isError = true;
+      }
+      if (!state.transaction.amount) {
+        state.errors.amount = "Please fill the amount";
+        isError = true;
+      }
+      if (state.transaction.amount === 0) {
+        state.errors.amount = "Amount must not be 0";
+        isError = true;
+      }
+      return isError;
+    };
+
+    const addTransaction = () => {
+      if (!notValidate()) {
+        createTransaction({
+          ...state.transaction,
+          id: Math.floor(Math.random() * 100000000),
+        });
+        state.transaction.text = "";
+        state.transaction.amount = "";
+      }
+    };
+    return { ...toRefs(state), addTransaction, clearValidation };
   },
 };
 </script>

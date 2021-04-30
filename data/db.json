@@ -9,6 +9,11 @@
       "id": 2,
       "text": "Salary",
       "amount": 100000
+    },
+    {
+      "text": "Chair",
+      "amount": 5000,
+      "id": 3
     }
   ]
 }

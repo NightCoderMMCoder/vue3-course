@@ -15,23 +15,24 @@
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed, toRefs } from "vue";
 import useFormatToCurrency from "../composables/FormatToCurrency";
 
 export default {
   props: { transactions: Array },
-  setup({ transactions }) {
+  setup(props) {
+    const { transactions } = toRefs(props);
     const { formatToCurrency } = useFormatToCurrency();
     const calculateIncome = computed(() =>
       formatToCurrency(
-        transactions
+        transactions.value
           .filter((transaction) => transaction.amount > 0)
           .reduce((total, cur) => (total += cur.amount), 0)
       )
     );
     const calculateExpense = computed(() =>
       formatToCurrency(
-        transactions
+        transactions.value
           .filter((transaction) => transaction.amount < 0)
           .reduce((total, cur) => (total -= cur.amount), 0)
       )
@@ -39,7 +40,7 @@ export default {
 
     const totalBalance = computed(() =>
       formatToCurrency(
-        transactions.reduce((total, cur) => (total += cur.amount), 0)
+        transactions.value.reduce((total, cur) => (total += cur.amount), 0)
       )
     );
     return { calculateIncome, calculateExpense, totalBalance };

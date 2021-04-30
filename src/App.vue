@@ -44,6 +44,11 @@ export default {
       transactions.value.splice(index, 1);
     };
     provide("deleteTransaction", deleteTransaction);
+
+    const addTransaction = (transaction) => {
+      transactions.value.push(transaction);
+    };
+    provide("addTransaction", addTransaction);
     return { transactions, deleteTransaction };
   },
 };

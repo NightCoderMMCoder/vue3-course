@@ -44,7 +44,11 @@ export default {
     };
     const confirmDelete = (confirm) => {
       if (confirm) {
-        deleteTransaction(transactionId.value);
+        fetch(`http://localhost:3000/transactions/${transactionId.value}`, {
+          method: "DELETE",
+        }).then(() => {
+          deleteTransaction(transactionId.value);
+        });
       }
       open.value = false;
     };

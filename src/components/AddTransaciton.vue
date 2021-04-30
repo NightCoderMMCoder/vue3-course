@@ -69,10 +69,7 @@ export default {
 
     const addTransaction = () => {
       if (!notValidate()) {
-        createTransaction({
-          ...state.transaction,
-          id: Math.floor(Math.random() * 100000000),
-        });
+        createTransaction(state.transaction);
         state.transaction.text = "";
         state.transaction.amount = "";
       }

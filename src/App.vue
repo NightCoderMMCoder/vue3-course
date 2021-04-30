@@ -2,8 +2,8 @@
   <the-hader></the-hader>
   <div class="container">
     <calculate-transaction :transactions="transactions"></calculate-transaction>
-
-    <transacitons-list :transactions="transactions"></transacitons-list>
+    <div v-if="isLoading">Loading...</div>
+    <transacitons-list v-else :transactions="transactions"></transacitons-list>
 
     <add-transaciton></add-transaciton>
   </div>
@@ -24,18 +24,14 @@ export default {
   },
   name: "App",
   setup() {
-    const transactions = ref([
-      {
-        id: 1,
-        text: "Shopping",
-        amount: -300,
-      },
-      {
-        id: 2,
-        text: "Salary",
-        amount: 100000,
-      },
-    ]);
+    const isLoading = ref(true);
+    const transactions = ref([]);
+    fetch("http://localhost:3000/transactions")
+      .then((res) => res.json())
+      .then((data) => {
+        transactions.value = data.reverse();
+        isLoading.value = false;
+      });
 
     const deleteTransaction = (id) => {
       const index = transactions.value.findIndex(
@@ -46,10 +42,20 @@ export default {
     provide("deleteTransaction", deleteTransaction);
 
     const addTransaction = (transaction) => {
-      transactions.value.unshift(transaction);
+      fetch("http://localhost:3000/transactions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(transaction),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          transactions.value.unshift(data);
+        });
     };
     provide("addTransaction", addTransaction);
-    return { transactions, deleteTransaction };
+    return { transactions, deleteTransaction, isLoading };
   },
 };
 </script>

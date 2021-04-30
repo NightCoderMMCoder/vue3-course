@@ -46,7 +46,7 @@ export default {
     provide("deleteTransaction", deleteTransaction);
 
     const addTransaction = (transaction) => {
-      transactions.value.push(transaction);
+      transactions.value.unshift(transaction);
     };
     provide("addTransaction", addTransaction);
     return { transactions, deleteTransaction };

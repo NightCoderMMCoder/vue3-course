@@ -16,16 +16,14 @@
     </BaseDialog>
   </teleport>
   <h3>History</h3>
-  <ul id="list" class="list">
-    <transition-group name="slide">
-      <TransactionItem
-        v-for="transaction in transactions"
-        :key="transaction.id"
-        :transaction="transaction"
-        @delete-confirm="handleClick"
-      />
-    </transition-group>
-  </ul>
+  <transition-group name="slide" tag="ul">
+    <TransactionItem
+      v-for="transaction in transactions"
+      :key="transaction.id"
+      :transaction="transaction"
+      @delete-confirm="handleClick"
+    />
+  </transition-group>
 </template>
 
 <script>
@@ -56,10 +54,11 @@ export default {
 </script>
 
 <style scoped>
-.list {
+ul {
   list-style-type: none;
   padding: 0;
   margin-bottom: 40px;
+  position: relative;
 }
 .slide-enter-from {
   opacity: 0;
@@ -69,8 +68,7 @@ export default {
   opacity: 0;
   transform: translateX(100px);
 }
-.slide-enter-active,
 .slide-leave-active {
-  transition: all 1s ease-in-out;
+  position: absolute;
 }
 </style>

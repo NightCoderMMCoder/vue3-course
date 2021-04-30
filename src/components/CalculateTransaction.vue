@@ -16,9 +16,12 @@
 
 <script>
 import { computed } from "vue";
+import useFormatToCurrency from "../composables/FormatToCurrency";
+
 export default {
   props: { transactions: Array },
   setup({ transactions }) {
+    const { formatToCurrency } = useFormatToCurrency();
     const calculateIncome = computed(() =>
       formatToCurrency(
         transactions
@@ -33,11 +36,7 @@ export default {
           .reduce((total, cur) => (total -= cur.amount), 0)
       )
     );
-    const formatToCurrency = (number) => {
-      return Math.abs(number)
-        .toFixed(2)
-        .replace(/\d(?=(\d{3})+\.)/g, "$&,");
-    };
+
     const totalBalance = computed(() =>
       formatToCurrency(
         transactions.reduce((total, cur) => (total += cur.amount), 0)

@@ -48,7 +48,6 @@ export default {
     const clearValidation = (input) => {
       if (!state.transaction[input]) return;
       state.errors[input] = "";
-      console.log(state.transaction[input]);
     };
 
     const notValidate = () => {

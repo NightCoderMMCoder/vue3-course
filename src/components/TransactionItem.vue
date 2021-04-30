@@ -17,19 +17,22 @@
   </teleport>
   <li :class="listClasses">
     {{ transaction.text }}
-    <span>{{ minusOrPlus }}${{ formatToCurrency(transaction.amount) }}</span
-    ><button class="delete-btn" @click="handleClick">x</button>
+    <span>{{ minusOrPlus }}{{ formatToCurrency(transaction.amount) }}ks</span>
+    <button class="delete-btn" @click="handleClick">x</button>
   </li>
 </template>
 
 <script>
 import { computed, inject, ref } from "vue";
 import BaseDialog from "./UI/BaseDialog";
+import useFormatToCurrency from "../composables/FormatToCurrency";
 
 export default {
   components: { BaseDialog },
   props: { transaction: Object },
   setup(props) {
+    const { formatToCurrency } = useFormatToCurrency();
+
     const deleteTransaction = inject("deleteTransaction");
 
     const open = ref(false);
@@ -54,11 +57,6 @@ export default {
       open.value = false;
     };
 
-    const formatToCurrency = (number) => {
-      return Math.abs(number)
-        .toFixed(2)
-        .replace(/\d(?=(\d{3})+\.)/g, "$&,");
-    };
     return {
       listClasses,
       minusOrPlus,

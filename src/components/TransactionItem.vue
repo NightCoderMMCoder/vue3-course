@@ -1,20 +1,4 @@
 <template>
-  <teleport to=".modal">
-    <base-dialog v-if="open">
-      <template v-slot:header>
-        Just Checking...
-      </template>
-      <template #body>
-        <p>Are you sure to delete?</p>
-      </template>
-      <template #actions>
-        <base-button class="flat" @click="confirmDelete(false)">
-          Cancel
-        </base-button>
-        <base-button @click="confirmDelete(true)">Ok</base-button>
-      </template>
-    </base-dialog>
-  </teleport>
   <li :class="listClasses">
     {{ transaction.text }}
     <span>{{ minusOrPlus }}{{ formatToCurrency(transaction.amount) }}ks</span>
@@ -23,19 +7,14 @@
 </template>
 
 <script>
-import { computed, inject, ref } from "vue";
-import BaseDialog from "./UI/BaseDialog";
+import { computed } from "vue";
 import useFormatToCurrency from "../composables/FormatToCurrency";
 
 export default {
-  components: { BaseDialog },
   props: { transaction: Object },
-  setup(props) {
+  emits: ["deleteConfirm"],
+  setup(props, { emit }) {
     const { formatToCurrency } = useFormatToCurrency();
-
-    const deleteTransaction = inject("deleteTransaction");
-
-    const open = ref(false);
 
     const listClasses = computed(() => {
       if (props.transaction.amount > 0) return "plus";
@@ -46,23 +25,13 @@ export default {
       if (props.transaction.amount > 0) return "+";
       return "-";
     });
-
     const handleClick = () => {
-      open.value = true;
+      emit("deleteConfirm", props.transaction.id);
     };
-    const confirmDelete = (confirm) => {
-      if (confirm) {
-        deleteTransaction(props.transaction.id);
-      }
-      open.value = false;
-    };
-
     return {
       listClasses,
       minusOrPlus,
       handleClick,
-      open,
-      confirmDelete,
       formatToCurrency,
     };
   },

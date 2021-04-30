@@ -1,24 +1,25 @@
 <template>
   <div class="backdrop"></div>
-  <div class="dialog">
-    <h3>
-      Just Checking...
-    </h3>
-    <div class="card-body">
-      <p>Are you sure to delete?</p>
+  <base-card class="dialog">
+    <template #header>
+      <slot name="header"></slot>
+    </template>
+
+    <template #body>
+      <slot name="body"></slot>
       <div class="btn-group">
-        <button class="flat" @click="$emit('confirmDelete', false)">
-          Cancel
-        </button>
-        <button @click="$emit('confirmDelete', true)">Ok</button>
+        <slot name="actions">
+          <base-button>Close</base-button>
+        </slot>
       </div>
-    </div>
-  </div>
+    </template>
+  </base-card>
 </template>
 
 <script>
+import BaseCard from "./BaseCard.vue";
 export default {
-  emits: ["confirmDelete"],
+  components: { BaseCard },
 };
 </script>
 
@@ -42,34 +43,8 @@ export default {
   max-width: 80%;
   width: 500px;
 }
-h3 {
-  background: #9c88ff;
-  color: white;
-  margin: 0;
-  padding: 20px;
-}
-.card-body {
-  padding: 20px;
-}
-p {
-  margin: 0;
-  margin-bottom: 10px;
-}
+
 .btn-group {
   text-align: right;
-}
-button {
-  background: #9c88ff;
-  color: white;
-  padding: 8px 20px;
-  border-radius: 100px;
-  border: 2px solid #9c88ff;
-  cursor: pointer;
-  font-weight: bold;
-}
-.flat {
-  background: transparent;
-  border: 2px solid #9c88ff;
-  color: #9c88ff;
 }
 </style>

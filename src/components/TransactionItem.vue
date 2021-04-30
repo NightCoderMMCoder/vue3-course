@@ -1,5 +1,18 @@
 <template>
-  <base-dialog v-if="open" @confirm-delete="confirmDelete"></base-dialog>
+  <base-dialog v-if="open">
+    <template v-slot:header>
+      Just Checking...
+    </template>
+    <template #body>
+      <p>Are you sure to delete?</p>
+    </template>
+    <template #actions>
+      <base-button class="flat" @click="confirmDelete(false)">
+        Cancel
+      </base-button>
+      <base-button @click="confirmDelete(true)">Ok</base-button>
+    </template>
+  </base-dialog>
   <li :class="listClasses">
     {{ transaction.text }}
     <span>{{ minusOrPlus }}${{ Math.abs(transaction.amount) }}</span
@@ -81,5 +94,10 @@ li.minus {
 
 li:hover .delete-btn {
   opacity: 1;
+}
+
+p {
+  margin: 0;
+  margin-bottom: 10px;
 }
 </style>

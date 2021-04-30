@@ -17,7 +17,7 @@
   </teleport>
   <li :class="listClasses">
     {{ transaction.text }}
-    <span>{{ minusOrPlus }}${{ Math.abs(transaction.amount) }}</span
+    <span>{{ minusOrPlus }}${{ formatToCurrency(transaction.amount) }}</span
     ><button class="delete-btn" @click="handleClick">x</button>
   </li>
 </template>
@@ -53,7 +53,20 @@ export default {
       }
       open.value = false;
     };
-    return { listClasses, minusOrPlus, handleClick, open, confirmDelete };
+
+    const formatToCurrency = (number) => {
+      return Math.abs(number)
+        .toFixed(2)
+        .replace(/\d(?=(\d{3})+\.)/g, "$&,");
+    };
+    return {
+      listClasses,
+      minusOrPlus,
+      handleClick,
+      open,
+      confirmDelete,
+      formatToCurrency,
+    };
   },
 };
 </script>

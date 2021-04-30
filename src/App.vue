@@ -1,7 +1,7 @@
 <template>
   <the-hader></the-hader>
   <div class="container">
-    <calculate-transaction></calculate-transaction>
+    <calculate-transaction :transactions="transactions"></calculate-transaction>
 
     <transacitons-list :transactions="transactions"></transacitons-list>
 

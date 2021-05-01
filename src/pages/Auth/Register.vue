@@ -5,6 +5,9 @@
         <h3>Register</h3>
       </div>
       <div class="card-body">
+        <div class="errors" v-if="errors.error">
+          {{ errors.error }}
+        </div>
         <form @submit.prevent="register">
           <div class="form-group">
             <label for="name">Name</label>
@@ -14,6 +17,7 @@
               class="form-control"
               v-model.trim="name"
             />
+            <small v-if="errors.name" class="error">{{ errors.name }}</small>
           </div>
           <div class="form-group">
             <label for="email">Email</label>
@@ -23,6 +27,7 @@
               class="form-control"
               v-model.trim="email"
             />
+            <small v-if="errors.email" class="error">{{ errors.email }}</small>
           </div>
           <div class="form-group">
             <label for="password">Password</label>
@@ -32,6 +37,9 @@
               class="form-control"
               v-model.trim="password"
             />
+            <small v-if="errors.password" class="error">{{
+              errors.password
+            }}</small>
           </div>
           <base-button type="submit">Register</base-button>
         </form>
@@ -47,7 +55,7 @@
 </template>
 
 <script>
-import { reactive, toRefs } from "vue";
+import { reactive, ref, toRefs } from "vue";
 import { db, firebaseAuth } from "../../firebase/init";
 export default {
   setup() {
@@ -57,23 +65,47 @@ export default {
       password: "",
     });
 
-    const register = async () => {
-      let res = await firebaseAuth.createUserWithEmailAndPassword(
-        user.email,
-        user.password
-      );
-      await res.user.updateProfile({ displayName: user.name });
-      db.collection("users")
-        .doc(res.user.uid)
-        .set({
-          name: user.name,
-          email: user.email,
-          status: true,
-        });
-      console.log(res);
+    const errors = ref({});
+
+    const validation = (user) => {
+      let formIsValidate = true;
+      console.log(Object.entries(user));
+      for (let [key, value] of Object.entries(user)) {
+        if (value === "") {
+          errors.value[key] = `Please fill the ${key} field.`;
+          formIsValidate = false;
+        } else {
+          errors.value[key] = ``;
+        }
+      }
+      return formIsValidate;
     };
 
-    return { ...toRefs(user), register };
+    const register = async () => {
+      let formValidate = validation({ ...user });
+      if (formValidate) {
+        try {
+          let res = await firebaseAuth.createUserWithEmailAndPassword(
+            user.email,
+            user.password
+          );
+          await res.user.updateProfile({ displayName: user.name });
+
+          await db
+            .collection("users")
+            .doc(res.user.uid)
+            .set({
+              name: user.name,
+              email: user.email,
+              status: true,
+            });
+        } catch (error) {
+          errors.value.error = error.message;
+        }
+      }
+    };
+
+    return { ...toRefs(user), register, errors };
   },
 };
 </script>

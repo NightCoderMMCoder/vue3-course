@@ -5,7 +5,7 @@
         <h3>Register</h3>
       </div>
       <div class="card-body">
-        <form>
+        <form @submit.prevent="register">
           <div class="form-group">
             <label for="name">Name</label>
             <input
@@ -48,6 +48,7 @@
 
 <script>
 import { reactive, toRefs } from "vue";
+import { db, firebaseAuth } from "../../firebase/init";
 export default {
   setup() {
     const user = reactive({
@@ -55,7 +56,24 @@ export default {
       email: "",
       password: "",
     });
-    return { ...toRefs(user) };
+
+    const register = async () => {
+      let res = await firebaseAuth.createUserWithEmailAndPassword(
+        user.email,
+        user.password
+      );
+      await res.user.updateProfile({ displayName: user.name });
+      db.collection("users")
+        .doc(res.user.uid)
+        .set({
+          name: user.name,
+          email: user.email,
+          status: true,
+        });
+      console.log(res);
+    };
+
+    return { ...toRefs(user), register };
   },
 };
 </script>

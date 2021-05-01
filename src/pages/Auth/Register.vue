@@ -8,17 +8,32 @@
         <form>
           <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" id="name" class="form-control" />
+            <input
+              type="text"
+              id="name"
+              class="form-control"
+              v-model.trim="name"
+            />
           </div>
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" id="email" class="form-control" />
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              v-model.trim="email"
+            />
           </div>
           <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" id="password" class="form-control" />
+            <input
+              type="password"
+              id="password"
+              class="form-control"
+              v-model.trim="password"
+            />
           </div>
-          <base-button>Register</base-button>
+          <base-button type="submit">Register</base-button>
         </form>
         <p>
           Not a member?
@@ -32,7 +47,17 @@
 </template>
 
 <script>
-export default {};
+import { reactive, toRefs } from "vue";
+export default {
+  setup() {
+    const user = reactive({
+      name: "",
+      email: "",
+      password: "",
+    });
+    return { ...toRefs(user) };
+  },
+};
 </script>
 
 <style scoped>

@@ -41,7 +41,9 @@
               errors.password
             }}</small>
           </div>
-          <base-button type="submit">Register</base-button>
+          <base-button type="submit"
+            >Register <base-spinner v-if="isLoading"></base-spinner
+          ></base-button>
         </form>
         <p>
           Not a member?
@@ -57,13 +59,18 @@
 <script>
 import { reactive, ref, toRefs } from "vue";
 import { db, firebaseAuth } from "../../firebase/init";
+import { useRouter } from "vue-router";
+import BaseSpinner from "../../components/UI/BaseSpinner.vue";
 export default {
+  components: { BaseSpinner },
   setup() {
+    const router = useRouter();
     const user = reactive({
       name: "",
       email: "",
       password: "",
     });
+    const isLoading = ref(false);
 
     const errors = ref({});
 
@@ -84,6 +91,7 @@ export default {
     const register = async () => {
       let formValidate = validation({ ...user });
       if (formValidate) {
+        isLoading.value = true;
         try {
           let res = await firebaseAuth.createUserWithEmailAndPassword(
             user.email,
@@ -99,13 +107,16 @@ export default {
               email: user.email,
               status: true,
             });
+          isLoading.value = false;
+          router.push({ name: "ChatScreen" });
         } catch (error) {
+          isLoading.value = false;
           errors.value.error = error.message;
         }
       }
     };
 
-    return { ...toRefs(user), register, errors };
+    return { ...toRefs(user), register, errors, isLoading };
   },
 };
 </script>

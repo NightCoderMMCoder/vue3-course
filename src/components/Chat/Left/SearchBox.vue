@@ -1,11 +1,25 @@
 <template>
   <div class="search">
-    <input type="text" placeholder="Search..." />
+    <input
+      type="text"
+      placeholder="Search..."
+      :value="search"
+      @input="searchUser"
+    />
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: { search: String },
+  emits: ["update:search"],
+  setup(_, { emit }) {
+    const searchUser = (e) => {
+      emit("update:search", e.target.value);
+    };
+    return { searchUser };
+  },
+};
 </script>
 
 <style scoped>

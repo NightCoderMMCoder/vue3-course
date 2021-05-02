@@ -3,8 +3,8 @@
     <ChatHeader>
       <base-button @click="logout">Logout</base-button>
     </ChatHeader>
-    <search-box></search-box>
-    <users-list></users-list>
+    <search-box v-model:search="search"></search-box>
+    <users-list :search="search"></users-list>
   </div>
 </template>
 
@@ -16,11 +16,13 @@ import SearchBox from "./SearchBox.vue";
 import UsersList from "./UsersList.vue";
 import useGetUser from "@/hooks/getUser";
 import useDoc from "@/hooks/useDoc";
+import { ref } from "vue";
 
 export default {
   components: { ChatHeader, SearchBox, UsersList },
   setup() {
     const { user } = useGetUser();
+    const search = ref("");
     const { updateDoc } = useDoc("users", user.value.uid);
     const router = useRouter();
     const logout = async () => {
@@ -29,7 +31,7 @@ export default {
       router.push({ name: "Login" });
     };
 
-    return { logout };
+    return { logout, search };
   },
 };
 </script>

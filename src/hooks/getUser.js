@@ -3,7 +3,6 @@ import { firebaseAuth } from "@/firebase/init";
 
 const user = ref(null);
 firebaseAuth.onAuthStateChanged((_user) => {
-  console.log(_user);
   user.value = _user;
 });
 

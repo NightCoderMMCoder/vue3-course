@@ -20,32 +20,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.user-profile {
-  background: var(--secondary);
-  padding: 15px 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.user-info {
-  display: flex;
-  align-items: center;
-}
-.user-img {
-  margin-right: 10px;
-  width: 70px;
-  height: 70px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: var(--primary);
-  border-radius: 50%;
-  font-size: 30px;
-  color: white;
-}
-.status {
-  color: rgb(214, 214, 214);
-}
-</style>

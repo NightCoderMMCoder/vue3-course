@@ -4,13 +4,20 @@
       <base-button @click="logout">Logout</base-button>
     </ChatHeader>
     <search-box></search-box>
-    <users-list></users-list>
+    <Suspense>
+      <template #default>
+        <users-list></users-list>
+      </template>
+      <template #fallback>
+        Loading...
+      </template>
+    </Suspense>
   </div>
 </template>
 
 <script>
 import { useRouter } from "vue-router";
-import { db, firebaseAuth } from "../../../firebase/init";
+import { firebaseAuth } from "../../../firebase/init";
 import ChatHeader from "../Shared/ChatHeader.vue";
 import SearchBox from "./SearchBox.vue";
 import UsersList from "./UsersList.vue";

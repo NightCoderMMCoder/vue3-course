@@ -1,9 +1,20 @@
 <template>
-  <h1>User List</h1>
+  <div class="contact-list">
+    <user-item></user-item>
+  </div>
 </template>
 
 <script>
-export default {};
+import UserItem from "./UserItem.vue";
+
+export default {
+  components: { UserItem },
+  async setup() {
+    let res = await fetch("https://jsonplaceholder.typicode.com/users");
+    let data = await res.json();
+    console.log(data);
+  },
+};
 </script>
 
-<style></style>
+<style scoped></style>

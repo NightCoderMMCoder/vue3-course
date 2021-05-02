@@ -1,13 +1,26 @@
 <template>
   <div class="contact-card">
-    <ChatHeader />
+    <ChatHeader>
+      <base-button @click="logout">Logout</base-button>
+    </ChatHeader>
   </div>
 </template>
 
 <script>
+import { useRouter } from "vue-router";
+import { firebaseAuth } from "../../../firebase/init";
 import ChatHeader from "../Shared/ChatHeader.vue";
 export default {
   components: { ChatHeader },
+  setup() {
+    const router = useRouter();
+    const logout = async () => {
+      await firebaseAuth.signOut();
+      router.push({ name: "Login" });
+    };
+
+    return { logout };
+  },
 };
 </script>
 

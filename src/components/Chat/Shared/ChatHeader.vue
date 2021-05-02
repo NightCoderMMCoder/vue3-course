@@ -7,6 +7,7 @@
         <small class="status">Online</small>
       </div>
     </div>
+    <slot></slot>
   </div>
 </template>
 

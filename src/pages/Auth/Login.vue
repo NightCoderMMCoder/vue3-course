@@ -51,31 +51,19 @@ import { reactive, ref, toRefs } from "vue";
 import { firebaseAuth } from "../../firebase/init";
 import { useRouter } from "vue-router";
 import BaseSpinner from "../../components/UI/BaseSpinner.vue";
+import useValidation from "../../hooks/validation";
+
 export default {
   components: { BaseSpinner },
   setup() {
+    const { errors, validation } = useValidation();
     const router = useRouter();
+
     const user = reactive({
       email: "",
       password: "",
     });
     const isLoading = ref(false);
-
-    const errors = ref({});
-
-    const validation = (user) => {
-      let formIsValidate = true;
-      console.log(Object.entries(user));
-      for (let [key, value] of Object.entries(user)) {
-        if (value === "") {
-          errors.value[key] = `Please fill the ${key} field.`;
-          formIsValidate = false;
-        } else {
-          errors.value[key] = ``;
-        }
-      }
-      return formIsValidate;
-    };
 
     const login = async () => {
       let formValidate = validation({ ...user });

@@ -1,17 +1,19 @@
 <template>
   <div class="user-profile">
     <div class="user-info">
-      <div class="user-img">A</div>
+      <div class="user-img">{{ user.name.charAt(0) }}</div>
       <div>
-        <h3 class="user-name">Aung Myat Oo</h3>
-        <small class="status">Online</small>
+        <h3 class="user-name">{{ user.name }}</h3>
+        <small class="status">{{ user.status ? "Online" : "Offline" }}</small>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: { user: Object },
+};
 </script>
 
 <style scoped>

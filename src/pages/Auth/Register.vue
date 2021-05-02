@@ -58,7 +58,7 @@
 
 <script>
 import { reactive, ref, toRefs } from "vue";
-import { db, firebaseAuth } from "../../firebase/init";
+import { db, firebaseAuth, timestamp } from "../../firebase/init";
 import { useRouter } from "vue-router";
 import BaseSpinner from "../../components/UI/BaseSpinner.vue";
 import useValidation from "../../hooks/validation";
@@ -95,6 +95,7 @@ export default {
               name: user.name,
               email: user.email,
               status: true,
+              createdAt: timestamp(),
             });
           isLoading.value = false;
           router.push({ name: "ChatScreen" });

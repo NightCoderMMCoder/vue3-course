@@ -5,6 +5,7 @@
     </ChatHeader>
     <search-box></search-box>
     <users-list></users-list>
+    <h1>Hi</h1>
   </div>
 </template>
 

@@ -4,14 +4,7 @@
       <base-button @click="logout">Logout</base-button>
     </ChatHeader>
     <search-box></search-box>
-    <Suspense>
-      <template #default>
-        <users-list></users-list>
-      </template>
-      <template #fallback>
-        Loading...
-      </template>
-    </Suspense>
+    <users-list></users-list>
   </div>
 </template>
 

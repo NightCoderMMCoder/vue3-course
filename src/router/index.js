@@ -55,7 +55,7 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!firebaseAuth.currentUser) {
       next({ name: "Login", query: { redirect: to.fullPath } });

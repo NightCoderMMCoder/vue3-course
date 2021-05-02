@@ -52,6 +52,7 @@ import { firebaseAuth } from "../../firebase/init";
 import { useRouter } from "vue-router";
 import BaseSpinner from "../../components/UI/BaseSpinner.vue";
 import useValidation from "../../hooks/validation";
+import useDoc from "../../hooks/useDoc";
 
 export default {
   components: { BaseSpinner },
@@ -70,10 +71,12 @@ export default {
       if (formValidate) {
         isLoading.value = true;
         try {
-          await firebaseAuth.signInWithEmailAndPassword(
+          const res = await firebaseAuth.signInWithEmailAndPassword(
             user.email,
             user.password
           );
+          const { updateDoc } = useDoc("users", res.user.uid);
+          await updateDoc({ status: true });
           isLoading.value = false;
           router.push({ name: "ChatScreen" });
         } catch (error) {

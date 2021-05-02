@@ -31,6 +31,15 @@ const routes = [
     // beforeEnter: requiresAuth,
   },
   {
+    path: "/chat/:userId",
+    name: "ChatRoom",
+    component: ChatScreen,
+    meta: {
+      requiresAuth: true,
+    },
+    // beforeEnter: requiresAuth,
+  },
+  {
     path: "/login",
     name: "Login",
     component: Login,

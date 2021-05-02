@@ -1,6 +1,8 @@
 <template>
-  <left-chat-screen></left-chat-screen>
-  <right-chat-screen></right-chat-screen>
+  <div class="chat-screen">
+    <left-chat-screen></left-chat-screen>
+    <right-chat-screen></right-chat-screen>
+  </div>
 </template>
 
 <script>
@@ -11,4 +13,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.chat-screen {
+  display: flex;
+}
+</style>

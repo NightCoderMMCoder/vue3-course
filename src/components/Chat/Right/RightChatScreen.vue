@@ -1,9 +1,18 @@
 <template>
-  <h1>Right</h1>
+  <div class="chat">
+    <welcome-chat></welcome-chat>
+  </div>
 </template>
 
 <script>
-export default {};
+import WelcomeChat from "./WelcomeChat.vue";
+export default {
+  components: { WelcomeChat },
+};
 </script>
 
-<style></style>
+<style scoped>
+.chat {
+  width: 75%;
+}
+</style>

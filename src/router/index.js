@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import ChatScreen from "../pages/Chat/ChatScreen.vue";
+import ChatRoom from "../pages/Chat/ChatRoom.vue";
 import Login from "../pages/Auth/Login.vue";
 import Register from "../pages/Auth/Register.vue";
 import { firebaseAuth } from "../firebase/init";
@@ -23,17 +24,23 @@ import { firebaseAuth } from "../firebase/init";
 const routes = [
   {
     path: "/",
-    name: "ChatScreen",
-    component: ChatScreen,
-    meta: {
-      requiresAuth: true,
-    },
-    // beforeEnter: requiresAuth,
+    redirect: { name: "ChatScreen" },
   },
   {
-    path: "/chat/:userId",
-    name: "ChatRoom",
+    path: "/chat",
+    name: "ChatScreen",
     component: ChatScreen,
+    children: [
+      {
+        path: ":userId",
+        name: "ChatRoom",
+        component: ChatRoom,
+        meta: {
+          requiresAuth: true,
+        },
+        // beforeEnter: requiresAuth,
+      },
+    ],
     meta: {
       requiresAuth: true,
     },

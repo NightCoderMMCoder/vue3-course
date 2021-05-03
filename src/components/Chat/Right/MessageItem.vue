@@ -1,5 +1,5 @@
 <template>
-  <div class="message-container" v-if="message.uid ? 'sender' : ''">
+  <div class="message-container" :class="{ sender: message.uid }">
     <div class="user-img">A</div>
     <div class="message-text">
       <h3>

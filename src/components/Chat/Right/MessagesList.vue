@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import moment from "moment";
 import { ref, watchEffect } from "vue";
 import MessageItem from "./MessageItem.vue";
 import { db } from "../../../firebase/init";
@@ -26,11 +27,20 @@ export default {
         collectionRef
           .doc(user.value.uid)
           .collection(props.otherUser.uid)
+          .orderBy("createdAt")
           .onSnapshot((snapshot) => {
-            messages.value = snapshot.docs.map((doc) => ({
-              ...doc.data(),
-              id: doc.id,
-            }));
+            console.log("snapshot");
+            let results = [];
+            snapshot.docs.forEach((doc) => {
+              if (doc.data().createdAt) {
+                results.push({
+                  ...doc.data(),
+                  id: doc.id,
+                  createdAt: moment(doc.data().createdAt.toDate()).calendar(),
+                });
+              }
+            });
+            messages.value = results;
           });
       }
     });

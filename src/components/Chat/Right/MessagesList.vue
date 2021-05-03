@@ -12,18 +12,6 @@
         <small>Today 8:40</small>
       </div>
     </div>
-    <div class="message-container sender">
-      <div class="user-img">A</div>
-      <div class="message-text">
-        <h3>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos, iure.
-          Omnis sunt nisi perferendis vero sequi possimus nobis? Rerum
-          laboriosam nostrum consequuntur doloremque, quis placeat laborum
-          assumenda quibusdam recusandae architecto!
-        </h3>
-        <small>Today 8:40</small>
-      </div>
-    </div>
   </div>
 </template>
 

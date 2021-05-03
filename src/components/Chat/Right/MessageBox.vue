@@ -1,14 +1,56 @@
 <template>
-  <form>
+  <form @submit.prevent="sendMessage">
     <div class="message-box">
-      <input type="text" placeholder="Send a message..." />
-      <i class="fas fa-paper-plane"></i>
+      <input
+        type="text"
+        v-model.trim="message"
+        placeholder="Send a message..."
+      />
+      <i class="fas fa-paper-plane" @click="sendMessage"></i>
     </div>
   </form>
 </template>
 
 <script>
-export default {};
+import { ref } from "vue";
+import { db, timestamp } from "../../../firebase/init";
+import useGetUser from "@/hooks/getUser";
+import { useRoute } from "vue-router";
+export default {
+  setup() {
+    const route = useRoute();
+    const otherUid = route.params.userId;
+    const { user } = useGetUser();
+
+    const message = ref("");
+    const error = ref("afsd");
+
+    const sendMessage = () => {
+      try {
+        const newMessage = {
+          text: message.value,
+          createdAt: timestamp(),
+          uid: user.value.uid,
+        };
+        let collectionRef = db.collection("messages");
+        collectionRef
+          .doc(user.value.uid)
+          .collection(otherUid)
+          .add(newMessage);
+
+        delete newMessage.uid;
+        collectionRef
+          .doc(otherUid)
+          .collection(user.value.uid)
+          .add(newMessage);
+        message.value = "";
+      } catch (err) {
+        error.value = err.message;
+      }
+    };
+    return { message, sendMessage };
+  },
+};
 </script>
 
 <style scoped>

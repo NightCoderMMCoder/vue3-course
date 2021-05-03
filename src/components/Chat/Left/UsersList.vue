@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { computed, ref, toRefs } from "vue";
+import { computed, ref, toRefs, watchEffect } from "vue";
 import { db } from "../../../firebase/init";
 import UserItem from "./UserItem.vue";
 import useGetUser from "@/hooks/getUser";
@@ -23,7 +23,7 @@ export default {
     const users = ref([]);
     let collectionRef = db.collection("users").orderBy("createdAt");
 
-    collectionRef.onSnapshot((snapshot) => {
+    let unsub = collectionRef.onSnapshot((snapshot) => {
       snapshot.docChanges().forEach((change) => {
         if (change.type === "added") {
           if (change.doc.id !== user.value.uid) {
@@ -37,6 +37,10 @@ export default {
           users.value[index] = { ...change.doc.data(), uid: change.doc.id };
         }
       });
+    });
+
+    watchEffect((onInValidate) => {
+      onInValidate(() => unsub());
     });
 
     const searchUsers = computed(() => {

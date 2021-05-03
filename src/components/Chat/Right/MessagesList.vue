@@ -20,15 +20,17 @@ export default {
   setup(props) {
     const { user } = useGetUser();
     const messages = ref([]);
+    let unsub;
 
     let collectionRef = db.collection("messages");
-    watchEffect(() => {
+    watchEffect((onInValidate) => {
       if (props.otherUser) {
-        collectionRef
+        unsub = collectionRef
           .doc(user.value?.uid)
           .collection(props.otherUser.uid)
           .orderBy("createdAt")
           .onSnapshot((snapshot) => {
+            console.log("snaphost");
             let results = [];
             snapshot.docs.forEach((doc) => {
               if (doc.data().createdAt) {
@@ -42,6 +44,11 @@ export default {
             messages.value = results;
           });
       }
+      onInValidate(() => {
+        if (unsub) {
+          unsub();
+        }
+      });
     });
 
     const chatsList = ref(null);
@@ -72,3 +79,5 @@ export default {
   width: 100%;
 }
 </style>
+
+// https://learnvue.co/2019/12/a-simple-vue-watcher-tutorial-for-beginners/

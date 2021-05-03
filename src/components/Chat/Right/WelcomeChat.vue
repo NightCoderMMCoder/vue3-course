@@ -1,5 +1,5 @@
 <template>
-  <div class="welcome-chat">
+  <div class="welcome-chat" v-if="user">
     <div class="user-img">
       {{ user.name.charAt(0) }}
     </div>

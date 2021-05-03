@@ -57,5 +57,7 @@ export default {
 <style scoped>
 .contact-list {
   padding: 5px 0;
+  height: 77.5vh;
+  overflow-y: auto;
 }
 </style>

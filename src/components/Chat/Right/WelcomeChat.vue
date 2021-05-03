@@ -13,7 +13,6 @@ import useGetUser from "@/hooks/getUser";
 export default {
   setup() {
     const { user } = useGetUser();
-    console.log(user);
     return { user };
   },
 };

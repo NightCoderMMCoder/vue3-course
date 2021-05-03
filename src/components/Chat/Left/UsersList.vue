@@ -54,4 +54,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.contact-list {
+  padding: 5px 0;
+}
+</style>

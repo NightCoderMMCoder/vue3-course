@@ -23,6 +23,9 @@ export default {
   background: none;
   color: white;
 }
+.router-link-exact-active .user-profile {
+  background: #66666646;
+}
 .user-img {
   width: 60px;
   height: 60px;

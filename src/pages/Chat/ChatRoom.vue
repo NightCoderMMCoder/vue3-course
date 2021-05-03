@@ -1,6 +1,6 @@
 <template>
   <chat-header :user="user"></chat-header>
-  <messages-list></messages-list>
+  <messages-list :otherUser="user"></messages-list>
   <message-box></message-box>
 </template>
 

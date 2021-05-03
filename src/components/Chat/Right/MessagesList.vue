@@ -1,5 +1,5 @@
 <template>
-  <div class="chats-list">
+  <div class="chats-list" ref="chatsList">
     <MessageItem
       v-for="message in messages"
       :key="message.id"
@@ -10,7 +10,7 @@
 
 <script>
 import moment from "moment";
-import { ref, watchEffect } from "vue";
+import { nextTick, ref, watch, watchEffect } from "vue";
 import MessageItem from "./MessageItem.vue";
 import { db } from "../../../firebase/init";
 import useGetUser from "@/hooks/getUser";
@@ -25,11 +25,10 @@ export default {
     watchEffect(() => {
       if (props.otherUser) {
         collectionRef
-          .doc(user.value.uid)
+          .doc(user.value?.uid)
           .collection(props.otherUser.uid)
           .orderBy("createdAt")
           .onSnapshot((snapshot) => {
-            console.log("snapshot");
             let results = [];
             snapshot.docs.forEach((doc) => {
               if (doc.data().createdAt) {
@@ -44,7 +43,23 @@ export default {
           });
       }
     });
-    return { messages };
+
+    const chatsList = ref(null);
+    watch(
+      messages,
+      () => {
+        nextTick(() => {
+          // chatsList.value.scrollTo(0, chatsList.value.scrollHeight);
+          chatsList.value.scroll({
+            top: chatsList.value.scrollHeight,
+            behavior: "smooth",
+          });
+        });
+      },
+      { deep: true }
+    );
+
+    return { messages, chatsList };
   },
 };
 </script>

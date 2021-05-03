@@ -24,7 +24,6 @@ export default {
     let collectionRef = db.collection("users").orderBy("createdAt");
 
     collectionRef.onSnapshot((snapshot) => {
-      console.log("snapshot");
       snapshot.docChanges().forEach((change) => {
         if (change.type === "added") {
           if (change.doc.id !== user.value.uid) {

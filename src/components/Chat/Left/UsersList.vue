@@ -48,7 +48,6 @@ export default {
       }
       return users.value;
     });
-    console.log(searchUsers);
 
     return { users, searchUsers };
   },

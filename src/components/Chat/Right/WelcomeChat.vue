@@ -1,9 +1,9 @@
 <template>
   <div class="welcome-chat">
     <div class="user-img">
-      {{ user.displayName.charAt(0) }}
+      {{ user.name.charAt(0) }}
     </div>
-    <h3>Hi, {{ user.displayName }}</h3>
+    <h3>Hi, {{ user.name }}</h3>
     <p>Please select a chat to start messaging.</p>
   </div>
 </template>

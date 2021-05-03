@@ -1,9 +1,9 @@
 <template>
   <div class="user-profile" v-if="user">
     <div class="user-info">
-      <div class="user-img">{{ user.displayName.charAt(0) }}</div>
+      <div class="user-img">{{ user.name.charAt(0) }}</div>
       <div>
-        <h3 class="user-name">{{ user.displayName }}</h3>
+        <h3 class="user-name">{{ user.name }}</h3>
         <small class="status">Online</small>
       </div>
     </div>
@@ -12,11 +12,7 @@
 </template>
 
 <script>
-import useGetUser from "@/hooks/getUser";
 export default {
-  setup() {
-    const { user } = useGetUser();
-    return { user };
-  },
+  props: { user: Object },
 };
 </script>

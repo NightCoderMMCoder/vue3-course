@@ -4,7 +4,7 @@
     <chat-room v-else></chat-room> -->
     <!-- <component :is="renderComponent"></component> -->
     <welcome-chat v-if="!$route.params.userId"></welcome-chat>
-    <router-view></router-view>
+    <router-view :key="$route.path"></router-view>
   </div>
 </template>
 

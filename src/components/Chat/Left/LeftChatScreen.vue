@@ -1,6 +1,6 @@
 <template>
   <div class="contact-card">
-    <ChatHeader>
+    <ChatHeader :user="user">
       <base-button @click="logout">Logout</base-button>
     </ChatHeader>
     <search-box v-model:search="search"></search-box>
@@ -31,7 +31,7 @@ export default {
       router.push({ name: "Login" });
     };
 
-    return { logout, search };
+    return { logout, search, user };
   },
 };
 </script>

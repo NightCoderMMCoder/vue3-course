@@ -1,27 +1,22 @@
 <template>
   <div>
-    <h1>Vuex</h1>
-    <p>{{ count }}</p>
-    <button @click="increaseCount">Count</button>
+    <search-box :search="search" @search-meals="search = $event"></search-box>
+    <meals-list></meals-list>
   </div>
 </template>
 
 <script>
+import MealsList from "./components/MealsList.vue";
+import SearchBox from "./components/SearchBox.vue";
 export default {
   name: "App",
-  // data: () => ({
-
-  // }),
-  computed: {
-    count() {
-      return this.$store.getters.count;
-    },
+  components: {
+    SearchBox,
+    MealsList,
   },
-  methods: {
-    increaseCount() {
-      this.$store.commit("increaseCount");
-    },
-  },
+  data: () => ({
+    search: "",
+  }),
 };
 </script>
 

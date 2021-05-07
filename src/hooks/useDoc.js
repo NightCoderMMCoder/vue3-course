@@ -1,9 +1,11 @@
 import { db } from "@/firebase/init";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 const useDoc = (collection, id) => {
   const item = ref(null);
   const error = ref(null);
+  const router = useRouter();
   let docRef = db.collection(collection).doc(id);
   const updateDoc = async (updates) => {
     error.value = null;
@@ -14,8 +16,17 @@ const useDoc = (collection, id) => {
     }
   };
   const getDoc = async () => {
-    const doc = await docRef.get();
-    item.value = { ...doc.data(), uid: doc.id };
+    error.value = null;
+    try {
+      const doc = await docRef.get();
+      if (!doc.data()) {
+        router.push("/chat");
+        throw new Error("The data not found");
+      }
+      item.value = { ...doc.data(), uid: doc.id };
+    } catch (err) {
+      error.value = err.message;
+    }
   };
 
   const setDoc = async (data) => {

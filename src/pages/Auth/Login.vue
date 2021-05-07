@@ -5,9 +5,7 @@
         <h3>Login</h3>
       </div>
       <div class="card-body">
-        <div class="errors" v-if="errors.error">
-          {{ errors.error }}
-        </div>
+        <div class="errors" v-if="errors.error">{{ errors.error }}</div>
         <form @submit.prevent="login">
           <div class="form-group">
             <label for="email">Email</label>

@@ -23,7 +23,6 @@ export default {
   setup() {
     const { user } = useGetUser();
     const search = ref("");
-    console.log(user.value);
     const { updateDoc } = useDoc("users", user.value.uid);
     const router = useRouter();
     const logout = async () => {

@@ -30,7 +30,6 @@ export default {
           .collection(props.otherUser.uid)
           .orderBy("createdAt")
           .onSnapshot((snapshot) => {
-            console.log("snaphost");
             let results = [];
             snapshot.docs.forEach((doc) => {
               if (doc.data().createdAt) {

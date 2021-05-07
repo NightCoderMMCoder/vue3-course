@@ -3,7 +3,7 @@
     <search-box
       :search="search"
       @update-search="search = $event"
-      @searchMeals="searchMeals(search)"
+      @searchMeals="searchMeal"
     ></search-box>
     <meals-list></meals-list>
   </div>
@@ -23,11 +23,11 @@ export default {
     search: "",
   }),
   methods: {
-    ...mapActions(["searchMeals"]),
-    // searchMeal() {
-    //   // this.$store.dispatch("searchMeals", this.search);
-    //   this.searchMeals(this.search);
-    // },
+    // ...mapActions("Meals", ["searchMeals"]),
+    searchMeal() {
+      this.$store.dispatch("Meals/searchMeals", this.search);
+      // this.searchMeals(this.search);
+    },
   },
 };
 </script>

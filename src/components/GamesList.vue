@@ -27,5 +27,6 @@ export default {
   width: 1200px;
   margin: 0 auto;
   margin-top: 40px;
+  flex-wrap: wrap;
 }
 </style>

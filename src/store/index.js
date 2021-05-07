@@ -1486,12 +1486,24 @@ export default createStore({
       },
     ],
   },
-  mutations: {},
-  actions: {},
+  mutations: {
+    setGames(state, payload) {
+      state.games = payload;
+    },
+  },
+  actions: {
+    async fetchGames({ commit }) {
+      const res = await fetch(
+        `https://api.rawg.io/api/games?key=6e2685a3e2aa4271b67bece3422a0788`
+      );
+      const data = await res.json();
+      commit("setGames", data.results);
+    },
+  },
   getters: {
     games(state) {
-      return state.games
-    }
+      return state.games;
+    },
   },
   modules: {},
 });

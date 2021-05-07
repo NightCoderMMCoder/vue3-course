@@ -5,6 +5,7 @@
       @update-search="search = $event"
       @searchMeals="searchMeal"
     ></search-box>
+    <button>Random</button>
     <meals-list></meals-list>
   </div>
 </template>

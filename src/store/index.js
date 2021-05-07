@@ -119,8 +119,21 @@ export default createStore({
       },
     ],
   },
-  mutations: {},
-  actions: {},
+  mutations: {
+    setMeals(state, payload) {
+      state.meals = payload;
+    },
+  },
+  actions: {
+    async searchMeals({ commit }, payload) {
+      const res = await fetch(
+        `https://www.themealdb.com/api/json/v1/1/search.php?s=${payload}`
+      );
+      const data = await res.json();
+
+      commit("setMeals", data.meals);
+    },
+  },
   getters: {
     meals(state) {
       return state.meals;

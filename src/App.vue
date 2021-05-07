@@ -22,7 +22,9 @@ export default {
     search: "",
   }),
   methods: {
-    searchMeals() {},
+    searchMeals() {
+      this.$store.dispatch("searchMeals", this.search);
+    },
   },
 };
 </script>

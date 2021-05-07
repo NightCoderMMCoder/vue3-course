@@ -58,10 +58,11 @@
 
 <script>
 import { reactive, ref, toRefs } from "vue";
-import { db, firebaseAuth, timestamp } from "../../firebase/init";
+import { firebaseAuth, timestamp } from "../../firebase/init";
 import { useRouter } from "vue-router";
 import BaseSpinner from "../../components/UI/BaseSpinner.vue";
 import useValidation from "../../hooks/validation";
+import useDoc from "@/hooks/useDoc";
 
 export default {
   components: { BaseSpinner },
@@ -88,15 +89,14 @@ export default {
           );
           await res.user.updateProfile({ displayName: user.name });
 
-          await db
-            .collection("users")
-            .doc(res.user.uid)
-            .set({
-              name: user.name,
-              email: user.email,
-              status: true,
-              createdAt: timestamp(),
-            });
+          const { setDoc } = useDoc("users", res.user.uid);
+          setDoc({
+            name: user.name,
+            email: user.email,
+            status: true,
+            createdAt: timestamp(),
+          });
+
           isLoading.value = false;
           router.push({ name: "ChatScreen" });
         } catch (error) {

@@ -26,6 +26,7 @@ export default {
     const error = ref("afsd");
 
     const sendMessage = () => {
+      if (!message.value) return;
       try {
         const newMessage = {
           text: message.value,

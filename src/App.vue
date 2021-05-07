@@ -3,7 +3,7 @@
     <search-box
       :search="search"
       @update-search="search = $event"
-      @searchMeals="searchMeals"
+      @searchMeals="searchMeals(search)"
     ></search-box>
     <meals-list></meals-list>
   </div>
@@ -12,6 +12,7 @@
 <script>
 import MealsList from "./components/MealsList.vue";
 import SearchBox from "./components/SearchBox.vue";
+import { mapActions } from "vuex";
 export default {
   name: "App",
   components: {
@@ -22,9 +23,11 @@ export default {
     search: "",
   }),
   methods: {
-    searchMeals() {
-      this.$store.dispatch("searchMeals", this.search);
-    },
+    ...mapActions(["searchMeals"]),
+    // searchMeal() {
+    //   // this.$store.dispatch("searchMeals", this.search);
+    //   this.searchMeals(this.search);
+    // },
   },
 };
 </script>

@@ -9,13 +9,15 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import MealItem from "./MealItem.vue";
 export default {
   components: { MealItem },
   computed: {
-    meals() {
-      return this.$store.getters.meals;
-    },
+    ...mapGetters(["meals"]),
+    // meals() {
+    //   return this.$store.getters.meals;
+    // },
   },
 };
 </script>

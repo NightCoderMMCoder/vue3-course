@@ -1,9 +1,17 @@
 <template>
-  <h1>Home Page</h1>
+  <search-box v-model="search"></search-box>
 </template>
 
 <script>
-export default {};
+import { ref } from "vue";
+import SearchBox from "../components/SearchBox.vue";
+export default {
+  components: { SearchBox },
+  setup() {
+    const search = ref("");
+    return { search };
+  },
+};
 </script>
 
 <style></style>

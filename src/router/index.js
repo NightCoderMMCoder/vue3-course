@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import ChatScreen from "../pages/Chat/ChatScreen.vue";
 import ChatRoom from "../pages/Chat/ChatRoom.vue";
+import NotFound from "../pages/NotFound";
 import Login from "../pages/Auth/Login.vue";
 import Register from "../pages/Auth/Register.vue";
 import { firebaseAuth } from "../firebase/init";
@@ -64,6 +65,11 @@ const routes = [
       requiresGuest: true,
     },
     // beforeEnter: notRequiresAuth,
+  },
+  {
+    path: "/:catchAll(.*)",
+    name: "NotFound",
+    component: NotFound,
   },
 ];
 

@@ -1,6 +1,10 @@
 <template>
   <div>
-    <search-box :search="search" @search-meals="search = $event"></search-box>
+    <search-box
+      :search="search"
+      @update-search="search = $event"
+      @searchMeals="searchMeals"
+    ></search-box>
     <meals-list></meals-list>
   </div>
 </template>
@@ -17,6 +21,9 @@ export default {
   data: () => ({
     search: "",
   }),
+  methods: {
+    searchMeals() {},
+  },
 };
 </script>
 

@@ -2,7 +2,8 @@
   <input
     type="text"
     :value="search"
-    @input="(e) => $emit('searchMeals', e.target.value)"
+    @input="(e) => $emit('updateSearch', e.target.value)"
+    @keyup.enter="$emit('searchMeals')"
   />
 </template>
 

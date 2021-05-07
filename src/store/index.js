@@ -1499,6 +1499,13 @@ export default createStore({
       const data = await res.json();
       commit("setGames", data.results);
     },
+    async searchGames({ commit }, payload) {
+      const res = await fetch(`
+      https://api.rawg.io/api/games?key=6e2685a3e2aa4271b67bece3422a0788&search=${payload}
+      `);
+      const data = await res.json();
+      commit("setGames", data.results);
+    },
   },
   getters: {
     games(state) {

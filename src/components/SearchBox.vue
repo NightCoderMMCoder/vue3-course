@@ -1,14 +1,16 @@
 <template>
   <input
     type="text"
-    :value="modelValue"
-    @input="(e) => $emit('update:modelValue', e.target.value)"
+    :value="search"
+    @input="(e) => $emit('update:search', e.target.value)"
+    @keyup.enter="$emit('searchGames')"
   />
 </template>
 
 <script>
 export default {
-  props: { modelValue: String },
+  props: { search: String },
+  emits: ["update:search", "searchGames"],
 };
 </script>
 

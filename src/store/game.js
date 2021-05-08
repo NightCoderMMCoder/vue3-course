@@ -1484,16 +1484,41 @@ const state = reactive({
       ],
     },
   ],
+  game: null,
 });
 
 const mutations = {
   async fetchGames() {
-    const res = await fetch(
+    const data = await mutations.fetchDatas(
       `https://api.rawg.io/api/games?key=6e2685a3e2aa4271b67bece3422a0788`
     );
-    const data = await res.json();
     state.games = data.results;
+  },
+  async searchGames(searchItem) {
+    const data = await mutations.fetchDatas(
+      `https://api.rawg.io/api/games?key=6e2685a3e2aa4271b67bece3422a0788&search=${searchItem}`
+    );
+    state.games = data.results;
+  },
+  async fetchGame() {
+    const data = await mutations.fetchDatas(
+      `https://api.rawg.io/api/games/3498?key=6e2685a3e2aa4271b67bece3422a0788`
+    );
+    state.game = data;
+    // state.games = data.results;
+  },
+  async fetchDatas(url) {
+    const res = await fetch(url);
+    const data = await res.json();
+    return data;
+  },
+};
+mutations.fetchGame();
+
+const getters = {
+  games() {
+    return state.games;
   },
 };
 
-export default { state, mutations };
+export default { state, mutations, getters };

@@ -1,6 +1,6 @@
 <template>
   <div class="games-list">
-    <game-item v-for="game in games" :key="game.id" :game="game"></game-item>
+    <game-item v-for="game in games()" :key="game.id" :game="game"></game-item>
   </div>
 </template>
 
@@ -10,8 +10,8 @@ import GameItem from "./GameItem.vue";
 export default {
   components: { GameItem },
   setup() {
-    const { state } = inject("gamesStore");
-    return { ...toRefs(state) };
+    const { getters } = inject("gamesStore");
+    return { ...getters };
   },
 };
 </script>

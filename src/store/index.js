@@ -6,6 +6,7 @@ export default createStore({
     game: {},
     error: null,
     loading: false,
+    lastFetch: null,
   },
   mutations: {
     setGames(state, payload) {
@@ -21,9 +22,13 @@ export default createStore({
     setLoading(state, payload) {
       state.loading = payload;
     },
+    setLastFetch(state, payload) {
+      state.lastFetch = payload;
+    },
   },
   actions: {
-    async fetchGames({ commit }) {
+    async fetchGames({ commit, getters }) {
+      if (!getters.shouldUpdate) return;
       commit("setLoading", true);
       try {
         const res = await fetch(
@@ -32,6 +37,7 @@ export default createStore({
 
         const data = await res.json();
         commit("setGames", data.results);
+        commit("setLastFetch", new Date().getTime());
       } catch (error) {
         commit("setError", error.message);
       } finally {
@@ -85,6 +91,11 @@ export default createStore({
     },
     loading(state) {
       return state.loading;
+    },
+    shouldUpdate(state) {
+      if (!state.lastFetch) return true;
+      let currentTimeStamp = new Date().getTime();
+      return (currentTimeStamp - state.lastFetch) / 1000 > 60;
     },
   },
   modules: {},

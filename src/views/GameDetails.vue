@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div v-if="error">
+    {{ error }}
+  </div>
+  <div v-else>
     <h1>Name: {{ game.name }}</h1>
     <img :src="game.background_image" alt="" />
     <p>{{ game.description }}</p>
@@ -24,8 +27,11 @@ export default {
     const store = useStore();
     const route = useRoute();
     store.dispatch("fetchGame", route.params.id);
+
     const game = computed(() => store.getters.game);
-    return { game };
+    const error = computed(() => store.getters.error);
+
+    return { game, error };
   },
 };
 </script>

@@ -1486,30 +1486,53 @@ export default createStore({
       },
     ],
     game: {},
+    error: null,
   },
   mutations: {
     setGames(state, payload) {
       state.games = payload;
     },
     setGame(state, payload) {
-      console.log(payload);
       state.game = payload;
+    },
+    setError(state, payload) {
+      console.log(payload);
+      state.error = payload;
     },
   },
   actions: {
     async fetchGames({ commit }) {
+      try {
+        const res = await fetch(
+          `https://api.rawg.io/api/games?key=6e2685a3e2aa4271b67bece3422a0788`
+        );
+
+        const data = await res.json();
+        commit("setGames", data.results);
+      } catch (error) {
+        commit("setError", error.message);
+      }
+    },
+    async fetchGame({ commit }, payload) {
+      try {
+        const res = await fetch(
+          `https://api.rawg.io/api/games/${payload}?key=6e2685a3e2aa4271b67bece3422a0788`
+        );
+        const data = await res.json();
+        if (data.detail) {
+          throw new Error("The data not found");
+        }
+        commit("setGame", data);
+      } catch (error) {
+        commit("setError", error.message);
+      }
+    },
+    async searchGames({ commit }, payload) {
       const res = await fetch(
-        `https://api.rawg.io/api/games?key=6e2685a3e2aa4271b67bece3422a0788`
+        `https://api.rawg.io/api/games?key=6e2685a3e2aa4271b67bece3422a0788&search=${payload}`
       );
       const data = await res.json();
       commit("setGames", data.results);
-    },
-    async fetchGame({ commit }, payload) {
-      const res = await fetch(
-        `https://api.rawg.io/api/games/${payload}?key=6e2685a3e2aa4271b67bece3422a0788`
-      );
-      const data = await res.json();
-      commit("setGame", data);
     },
   },
   getters: {
@@ -1518,6 +1541,9 @@ export default createStore({
     },
     game(state) {
       return state.game;
+    },
+    error(state) {
+      return state.error;
     },
   },
   modules: {},

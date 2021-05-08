@@ -1,5 +1,5 @@
 <template>
-  <search-box v-model="search"></search-box>
+  <search-box v-model="search" @search-games="searchGames"></search-box>
   <games-list></games-list>
 </template>
 
@@ -14,7 +14,12 @@ export default {
     const store = useStore();
     const search = ref("");
     store.dispatch("fetchGames");
-    return { search };
+
+    const searchGames = () => {
+      store.dispatch("searchGames", search.value);
+    };
+
+    return { search, searchGames };
   },
 };
 </script>

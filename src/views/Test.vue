@@ -5,11 +5,10 @@
 </template>
 
 <script>
-import { toRefs } from "vue";
-import useStore from "../store/global";
+import { inject, toRefs } from "vue";
 export default {
   setup() {
-    const { state } = useStore;
+    const { state } = inject("store");
     return { ...toRefs(state) };
   },
 };

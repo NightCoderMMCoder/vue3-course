@@ -4,6 +4,16 @@
   <router-view />
 </template>
 
+<script>
+import store from "./store/global";
+import { provide } from "vue";
+export default {
+  setup() {
+    provide("store", store);
+  },
+};
+</script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

@@ -4,10 +4,12 @@
 
 <script>
 import store from "./store/global";
+import games from "./store/game";
 import { provide } from "vue";
 export default {
   setup() {
     provide("store", store);
+    provide("gamesStore", games);
   },
 };
 </script>

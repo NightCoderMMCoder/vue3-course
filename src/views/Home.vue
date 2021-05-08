@@ -1,10 +1,14 @@
 <template>
   <search-box v-model="search" @search-games="searchGames"></search-box>
-  <games-list></games-list>
+  <div v-if="loading">
+    Loading...
+  </div>
+  <div v-else-if="error">{{ error }}</div>
+  <games-list v-else></games-list>
 </template>
 
 <script>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import SearchBox from "../components/SearchBox.vue";
 import GamesList from "../components/GamesList.vue";
 import { useStore } from "vuex";
@@ -19,7 +23,10 @@ export default {
       store.dispatch("searchGames", search.value);
     };
 
-    return { search, searchGames };
+    const loading = computed(() => store.getters.loading);
+    const error = computed(() => store.getters.error);
+
+    return { search, searchGames, loading, error };
   },
 };
 </script>

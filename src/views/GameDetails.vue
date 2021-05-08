@@ -1,5 +1,8 @@
 <template>
-  <div v-if="error">
+  <div v-if="loading">
+    Loading...
+  </div>
+  <div v-else-if="error">
     {{ error }}
   </div>
   <div v-else>
@@ -29,9 +32,10 @@ export default {
     store.dispatch("fetchGame", route.params.id);
 
     const game = computed(() => store.getters.game);
+    const loading = computed(() => store.getters.loading);
     const error = computed(() => store.getters.error);
 
-    return { game, error };
+    return { game, error, loading };
   },
 };
 </script>

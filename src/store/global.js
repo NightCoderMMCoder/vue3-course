@@ -12,8 +12,17 @@ const mutations = {
       text,
     };
     state.todos.push(newTodo);
-    console.log(state.todos);
+  },
+  deleteTodo(id) {
+    const index = state.todos.findIndex((todo) => todo.id === id);
+    state.todos.splice(index, 1);
   },
 };
 
-export default { state, mutations };
+const getters = {
+  todos() {
+    return state.todos;
+  },
+};
+
+export default { state, mutations, getters };

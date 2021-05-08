@@ -1,10 +1,12 @@
 <template>
   <div class="game">
-    <img :src="game.background_image" alt="" />
-    <div>
-      <h3>Name: {{ game.name }}</h3>
-      <span>{{ game.rating }}</span>
-    </div>
+    <router-link :to="{ name: 'GameDetails', params: { id: game.id } }">
+      <img :src="game.background_image" alt="" />
+      <div>
+        <h3>Name: {{ game.name }}</h3>
+        <span>{{ game.rating }}</span>
+      </div>
+    </router-link>
   </div>
 </template>
 

@@ -23,6 +23,8 @@ export default {
       store.dispatch("searchGames", search.value);
     };
 
+    console.log(process.env.VUE_APP_API_KEY);
+
     const loading = computed(() => store.getters.loading);
     const error = computed(() => store.getters.error);
 

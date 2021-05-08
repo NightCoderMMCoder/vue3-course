@@ -27,7 +27,7 @@ export default createStore({
       commit("setLoading", true);
       try {
         const res = await fetch(
-          `https://api.rawg.io/api/games?key=6e2685a3e2aa4271b67bece3422a0788`
+          `https://api.rawg.io/api/games?key=${process.env.VUE_APP_API_KEY}`
         );
 
         const data = await res.json();
@@ -42,7 +42,7 @@ export default createStore({
       commit("setLoading", true);
       try {
         const res = await fetch(
-          `https://api.rawg.io/api/games/${payload}?key=6e2685a3e2aa4271b67bece3422a0788`
+          `https://api.rawg.io/api/games/${payload}?key=${process.env.VUE_APP_API_KEY}`
         );
         const data = await res.json();
         if (data.detail) {
@@ -59,7 +59,7 @@ export default createStore({
       commit("setLoading", true);
       try {
         const res = await fetch(
-          `https://api.rawg.io/api/games?key=6e2685a3e2aa4271b67bece3422a0788&search=${payload}`
+          `https://api.rawg.io/api/games?key=${process.env.VUE_APP_API_KEY}&search=${payload}`
         );
         const data = await res.json();
         if (data.count === 0) {

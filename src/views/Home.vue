@@ -1,19 +1,28 @@
 <template>
   <div>
-    <button @click="decreaseCount">-</button>
-    {{ count }}
-    <button @click="increaseCount">+</button>
+    <form @submit.prevent="addNewTodo">
+      <input type="text" v-model="text" />
+      <button type="submit">Add</button>
+    </form>
   </div>
 </template>
 
 <script>
-import { toRefs } from "vue";
-import useStore from "../store/global";
+import { inject, ref } from "vue";
 export default {
   name: "Home",
   setup() {
-    const { state, increaseCount, decreaseCount } = useStore;
-    return { ...toRefs(state), increaseCount, decreaseCount };
+    const {
+      mutations: { addTodo },
+    } = inject("store");
+
+    const text = ref("");
+    const addNewTodo = () => {
+      addTodo(text.value);
+      text.value = "";
+    };
+
+    return { text, addNewTodo };
   },
 };
 </script>
